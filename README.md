@@ -4,7 +4,7 @@ Slim is a low-overhead container overlay networking solution. Unlike traditional
 
 Slim has two modes: secure mode and non-secure mode. Non-secure mode does not require kernel modifications and is easy to deploy. However, non-secure mode should be used only when a container is trusted because the container gets access to its host network. Secure mode addresses this security issue via a Linux kernel module.
 
-Our detailed paper will appear at NSDI 2019 (https://www.usenix.org/conference/nsdi19/technical-sessions).
+Our NSDI 2019 paper (https://danyangzhuo.com/papers/NSDI19-Slim.pdf) describes the technical details of Slim.
 
 ## Requirement
 
