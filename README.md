@@ -18,3 +18,70 @@ We have tested the following applications:
 * Nginx
 * Postgres
 * Apache Kafka
+
+## How to use this code?
+Here is an example to configure a cluster of two machines to use Slim in the non-secure mode. Let's assume machine A has IP address of IP1 and machine B has IP2.
+
+### Step 0: Clone the repo, build from source
+On machine A and B:
+```bash
+git clone https://github.com/danyangz/slim
+pushd slim/socket
+make
+popd
+pushd slim/router
+make
+popd
+```
+
+### Step 1: Start the weave network
+On machine A:
+```bash
+weave launch
+```
+On machine B:
+```bash
+weave launch <IP1>
+```
+
+### Step 2: Start the containers
+Let's start a container on each machine. Here we simply use standard ubuntu 16.04 image to instantiate containers. We name the container on machine A as c1 and the container on machine B as c2.
+
+On machine A:
+```bash
+eval $(weave env)
+docker run --name c1 -v slim/:/slim/ -ti ubuntu:16.04
+```
+On machine B:
+```bash
+eval $(weave env)
+docker run --name c2 -v slim/:/slim/ -ti ubuntu:16.04
+```
+
+### Step 3: Start SlimRouter
+On machine A:
+```bash
+cd slim/router
+./router <IP1>
+```
+On machine B:
+```bash
+cd slim/router
+./router <IP2>
+```
+
+### Step 4: Speed test
+Let's use iperf to test the network speed.
+
+Inside the shell of container c1 on machine A:
+```bash
+apt update
+apt install iperf
+LD_PRELOAD=/slim/socket/SlimSocket.so VNET_PREFIX=10.32.0.0/12 iperf -s
+```
+Inside the shell of container c2 on machine B:
+```bash
+apt update
+apt install iperf
+LD_PRELOAD=/slim/socket/SlimSocket.so VNET_PREFIX=10.32.0.0/12 iperf -c c1
+```
