@@ -34,6 +34,25 @@ make
 popd
 ```
 
+### Step 0: Secure mode (optional)
+To use the secure mode, first compile and insert the kernel module on machine A and B:
+```bash
+git clone https://github.com/danyangz/slim
+pushd slim/kern_module
+make
+sudo insmod slim_kern.ko 
+popd
+```
+Uncomment the first lines in router/router.cpp and socket/socket.c. Then, compile the secure mode of SlimRouter and SlimSocket:
+```bash
+pushd slim/socket
+make
+popd
+pushd slim/router
+make
+popd
+```
+
 ### Step 1: Start the weave network
 On machine A:
 ```bash
