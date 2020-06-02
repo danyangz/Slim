@@ -1,5 +1,5 @@
 ## How to use Slim in Kubernetes?
-We use the Antrea CNI(https://github.com/vmware-tanzu/antrea) as an exmaple.
+We use the Antrea CNI (https://github.com/vmware-tanzu/antrea) as an exmaple.
 
 ### Step 0: Prerequisites
 Deploy a kubernetes cluster.
@@ -53,13 +53,13 @@ spec:
 ```
 Since default ubuntu image does not include iperf and network tools, we use `ubuntu-net:v1`, which is made in advance and include iperf and network tools. You can replace `ubuntu-net:v1` with your customized image.
 
-Then, create these containers in Pod.
+Create these containers in Pod.
 ```
 root@k8s-master:/usr/local/kubernetes# kubectl create -f deployment_ubuntu.yaml
 ```
 
-## Step 2: Access a node machine and the corresponding container
-Assuming we can see that a container IP in k8s-node-01 is 10.244.1.21, and a container IP in k8s-node-02 is 10.244.2.15
+### Step 2: Access a node machine and the corresponding container
+Assuming we can see that a container IP in k8s-node-01 is 10.244.1.21 and a container IP in k8s-node-02 is 10.244.2.15,
 ```
 root@k8s-master:/usr/local/kubernetes/cprtest# kubectl get pod -o wide | grep ubuntu
 ubuntu-deployment-5b86c44b94-b6ng8   1/1     Running   0          28h   10.244.2.14   k8s-node-02   <none>           <none>
@@ -80,7 +80,7 @@ root@ubuntu-deployment-5b86c44b94-vqxwf:/# LD_PRELOAD=/slim/socket/SlimSocket.so
 WARNING: VNET_PREFIX is not set. Using 0.0.0.0/0.
 All connections are treated as virtual network connections.
 ```
-If it works, we can see following messages on above k8s-node-01 machine.
+If it works, we can see following messages on k8s-node-01 machine:
 ```
 [TRACE] New client with sock 4.
 [TRACE] result of pthread_create --> 0
@@ -98,7 +98,7 @@ If it works, we can see following messages on above k8s-node-01 machine.
 [TRACE] write rsp 4 bytes to sock 5
 ```
 
-# Step 3: Access another node machine and corresponding container
+### Step 3: Access another node machine and the corresponding container
 Start SlimRouter on k8s-node-01 machine (IP: 10.0.0.62).
 ```
 root@k8s-node-02:~# cd /root/slim/router/
