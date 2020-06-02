@@ -59,7 +59,7 @@ root@k8s-master:/usr/local/kubernetes# kubectl create -f deployment_ubuntu.yaml
 ```
 
 ### Step 2: Access a node machine and the corresponding container
-Assuming we can see that a container IP in k8s-node-01 is 10.244.1.21 and a container IP in k8s-node-02 is 10.244.2.15,
+Assuming a container IP in k8s-node-01 is 10.244.1.21 and a container IP in k8s-node-02 is 10.244.2.15,
 ```
 root@k8s-master:/usr/local/kubernetes/cprtest# kubectl get pod -o wide | grep ubuntu
 ubuntu-deployment-5b86c44b94-b6ng8   1/1     Running   0          28h   10.244.2.14   k8s-node-02   <none>           <none>
@@ -112,4 +112,4 @@ root@k8s-master:~# kubectl exec -it ubuntu-deployment-5b86c44b94-rrdhk -- /bin/b
 root@ubuntu-deployment-5b86c44b94-rrdhk:/# LD_PRELOAD=/slim/socket/SlimSocket.so iperf -c 10.244.1.21 -i 2
 ```
 
-Slim can also support multiple containers in different nodes or Pods.
+Slim can also support multiple containers in different nodes or Pods. 
