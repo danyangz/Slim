@@ -104,3 +104,6 @@ apt update
 apt install iperf
 LD_PRELOAD=/slim/socket/SlimSocket.so VNET_PREFIX=10.32.0.0/12 iperf -c c1
 ```
+
+### Support for Kubernetes
+Slim supports Kubernetes, and the instructions are in [k8s Setup](k8s.md).
