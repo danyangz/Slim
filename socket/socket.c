@@ -841,6 +841,12 @@ int accept4(int socket, struct sockaddr *addr, socklen_t *addrlen, int flags)
         return -1;
     }
 #endif
+//change here
+#ifdef SECURITY
+    host_fd = tmp_fd;
+#else
+    host_fd = recv_fd(unix_sock);
+#endif
 
     int bytes = 0, rsp_size = sizeof(struct SOCKET_ACCEPT4_RSP);
     struct SOCKET_ACCEPT4_RSP rsp;
@@ -860,11 +866,6 @@ int accept4(int socket, struct sockaddr *addr, socklen_t *addrlen, int flags)
         GLOBAL_UNLOCK;
         return -1;
     }
-#ifdef SECURITY
-    host_fd = tmp_fd;
-#else
-    host_fd = recv_fd(unix_sock);
-#endif
     real_socket.close(unix_sock);
 
     // get host_fd, host_index, addr and addrlen
