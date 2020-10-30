@@ -842,9 +842,7 @@ int accept4(int socket, struct sockaddr *addr, socklen_t *addrlen, int flags)
     }
 #endif
 //change here
-#ifdef SECURITY
-    host_fd = tmp_fd;
-#else
+#ifndef SECURITY
     host_fd = recv_fd(unix_sock);
 #endif
 
@@ -866,6 +864,10 @@ int accept4(int socket, struct sockaddr *addr, socklen_t *addrlen, int flags)
         GLOBAL_UNLOCK;
         return -1;
     }
+#ifdef SECURITY
+    host_fd = tmp_fd;
+#endif
+
     real_socket.close(unix_sock);
 
     // get host_fd, host_index, addr and addrlen
